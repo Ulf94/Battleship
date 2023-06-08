@@ -5,5 +5,5 @@ using Battleships.Models;
 public interface IUserService
 {
     public User CreateUser(string userType);
-    public Point Shoot();
+    public Point Shoot(string user);
 }

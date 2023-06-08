@@ -2,7 +2,6 @@
 
 using System.Collections.Generic;
 using Battleships.Constants;
-using Battleships.Exceptions;
 using Battleships.Interfaces;
 using Battleships.Models;
 using FluentAssertions;
@@ -17,7 +16,7 @@ public sealed class ShipTests
     private readonly Mock<IConsoleIO> consoleIO = new();
     private readonly Mock<IPointsProvidersFactory> pointsProvidersFactoryMock = new();
 
-    private readonly List<Point> providedPointsOne = new List<Point>
+    private readonly List<Point> providedPointBattleship = new List<Point>
     {
         new(1, 1),
         new(2, 1),
@@ -26,65 +25,23 @@ public sealed class ShipTests
         new(5, 1),
     };
 
-    private readonly List<Point> providedPointsThree = new List<Point>
-    {
-        new(1, 1),
-        new(1, 2),
-        new(1, 3),
-        new(1, 4),
-        new(1, 7),
-    };
-
-    private readonly List<Point> providedPointsTwo = new List<Point>
+    private readonly List<Point> providedPointDestroyer = new List<Point>
     {
         new(1, 1),
         new(2, 1),
         new(3, 1),
         new(4, 1),
-        new(7, 1),
     };
-
-    [TestMethod]
-    public void OnGivenIncorrectPoints_ShouldNotCreateHorizontalShip()
-    {
-        //GIVEN
-        this.pointsProvidersFactoryMock.Setup(provider => provider.GetInstance(OwnerType.USER).GetPoints(ShipSizes.BATTLESHIP))
-            .Returns(this.providedPointsThree);
-
-        //WHEN
-        var action = () => new Ship(this.allCollectedPoints, this.pointsProvidersFactoryMock.Object, OwnerType.USER, ShipSizes.BATTLESHIP);
-
-        //THEN
-        action.Should()
-            .Throw<InvalidPointsException>()
-            ;
-    }
-
-    [TestMethod]
-    public void OnGivenIncorrectPoints_ShouldNotCreateVerticalShip()
-    {
-        //GIVEN
-        this.pointsProvidersFactoryMock.Setup(provider => provider.GetInstance(OwnerType.USER).GetPoints(ShipSizes.BATTLESHIP))
-            .Returns(this.providedPointsTwo);
-
-        //WHEN
-        var action = () => new Ship(this.allCollectedPoints, this.pointsProvidersFactoryMock.Object, OwnerType.USER, ShipSizes.BATTLESHIP);
-
-        //THEN
-        action.Should()
-            .Throw<InvalidPointsException>()
-            ;
-    }
 
     [TestMethod]
     public void ShouldCreateBattleship()
     {
         //GIVEN
-        this.pointsProvidersFactoryMock.Setup(provider => provider.GetInstance(OwnerType.USER).GetPoints(ShipSizes.BATTLESHIP))
-            .Returns(this.providedPointsOne);
+        this.pointsProvidersFactoryMock.Setup(provider => provider.GetInstance(PlayerNames.USER).GetPoints(ShipSizes.BATTLESHIP))
+            .Returns(this.providedPointBattleship);
 
         //WHEN
-        var battleship = new Ship(this.allCollectedPoints, this.pointsProvidersFactoryMock.Object, OwnerType.USER, ShipSizes.BATTLESHIP);
+        var battleship = new Ship(this.providedPointBattleship, PlayerNames.USER, ShipSizes.BATTLESHIP);
 
         //THEN
 
@@ -94,7 +51,7 @@ public sealed class ShipTests
 
         battleship.Points
             .Should()
-            .HaveCount(SHIP_SIZE)
+            .HaveCount(ShipSizes.BATTLESHIP)
             ;
     }
 
@@ -110,21 +67,25 @@ public sealed class ShipTests
             new(1, 4),
         };
 
-        this.pointsProvidersFactoryMock.Setup(provider => provider.GetInstance(OwnerType.USER).GetPoints(ShipSizes.DESTROYER))
+        this.pointsProvidersFactoryMock.Setup(provider => provider.GetInstance(PlayerNames.COMPUTER).GetPoints(ShipSizes.DESTROYER))
             .Returns(destroyerPoints);
 
         //WHEN
-        var battleship = new Ship(this.allCollectedPoints, this.pointsProvidersFactoryMock.Object, OwnerType.USER, ShipSizes.DESTROYER);
+        var destroyer = new Ship(this.providedPointDestroyer, PlayerNames.COMPUTER, ShipSizes.DESTROYER);
 
         //THEN
 
-        battleship.Should()
+        destroyer.Should()
             .NotBeNull()
             ;
 
-        battleship.Points
+        destroyer.Points
             .Should()
             .HaveCount(ShipSizes.DESTROYER)
+            ;
+
+        destroyer.occupationType.Should()
+            .Be(OccupationType.D)
             ;
     }
 
@@ -132,11 +93,11 @@ public sealed class ShipTests
     public void WhenHitsAreGreaterOrEqualThanSize_IsSunkShouldBeTrue()
     {
         //GIVEN
-        this.pointsProvidersFactoryMock.Setup(provider => provider.GetInstance(OwnerType.USER).GetPoints(SHIP_SIZE))
-            .Returns(this.providedPointsOne);
+        this.pointsProvidersFactoryMock.Setup(provider => provider.GetInstance(PlayerNames.USER).GetPoints(ShipSizes.BATTLESHIP))
+            .Returns(this.providedPointBattleship);
 
         //WHEN
-        var battleship = new Ship(this.allCollectedPoints, this.pointsProvidersFactoryMock.Object, OwnerType.USER, SHIP_SIZE)
+        var battleship = new Ship(this.providedPointBattleship, PlayerNames.USER, SHIP_SIZE)
         {
             Hits = 5,
         };

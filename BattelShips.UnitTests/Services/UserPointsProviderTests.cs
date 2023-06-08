@@ -9,15 +9,15 @@ using Moq;
 [TestClass]
 public class UserPointsProviderTests
 {
-    private const int SHIP_SIZE = 1;
+    private const int SHIP_SIZE = 5;
     private readonly Mock<IConsoleIO> console = new();
 
     [TestMethod]
     public void OnGivenPoints_ShouldReturnListOfPoints()
     {
         //GIVEN
-        this.console.Setup(service => service.ReadLine()).Returns("A1");
-        var userPointsProvider = new UserPointsProvider(this.console.Object);
+
+        var userPointsProvider = new UserPointsProvider(new ConsoleIOTest());
 
         //WHEN
         var result = userPointsProvider.GetPoints(SHIP_SIZE);

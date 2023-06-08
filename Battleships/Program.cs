@@ -12,6 +12,7 @@ services.AddScoped<IPointsProvider, ComputerPointsProvider>();
 services.AddTransient<IPointsProvidersFactory, PointsProvidersFactory>();
 services.AddSingleton<IGame, Game>();
 services.AddScoped<IUserService, UserService>();
+services.AddScoped<IShipService, ShipService>();
 
 var pointsProviderFactory = services.BuildServiceProvider().GetRequiredService<IPointsProvidersFactory>();
 var consoleService = services.BuildServiceProvider().GetRequiredService<IConsoleIO>();

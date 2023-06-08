@@ -28,11 +28,11 @@ public sealed class UserBoardTests
             new(1, 5),
         };
 
-        this.pointsProviderFactory.Setup(provider => provider.GetInstance(OwnerType.USER).GetPoints(ShipSizes.BATTLESHIP)).Returns(shipPoints);
+        this.pointsProviderFactory.Setup(provider => provider.GetInstance(PlayerNames.USER).GetPoints(ShipSizes.BATTLESHIP)).Returns(shipPoints);
 
         var ships = new List<Ship>
         {
-            new Ship(allPoints, this.pointsProviderFactory.Object, OwnerType.USER, ShipSizes.BATTLESHIP),
+            new Ship(shipPoints, PlayerNames.USER, ShipSizes.BATTLESHIP),
         };
 
         var userBoard = new Board(ships);
@@ -62,11 +62,11 @@ public sealed class UserBoardTests
             new(1, 5),
         };
 
-        this.pointsProviderFactory.Setup(provider => provider.GetInstance(OwnerType.USER).GetPoints(ShipSizes.BATTLESHIP)).Returns(shipPoints);
+        this.pointsProviderFactory.Setup(provider => provider.GetInstance(PlayerNames.USER).GetPoints(ShipSizes.BATTLESHIP)).Returns(shipPoints);
 
         var ships = new List<Ship>
         {
-            new Ship(allPoints, this.pointsProviderFactory.Object, OwnerType.USER, ShipSizes.BATTLESHIP),
+            new Ship(shipPoints, PlayerNames.USER, ShipSizes.BATTLESHIP),
         };
 
         var userBoard = new Board(ships);

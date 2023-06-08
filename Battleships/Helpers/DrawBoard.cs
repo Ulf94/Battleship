@@ -41,7 +41,5 @@ internal static class DrawBoard
 
             Console.WriteLine();
         }
-
-        Console.WriteLine(Environment.NewLine);
     }
 }

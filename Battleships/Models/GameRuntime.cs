@@ -12,8 +12,10 @@ internal sealed class GameRuntime
 
         do
         {
-            var x = Console.ReadLine();
-            //this.game.UserTurn()
+            var userResult = this.game.UserTurn();
+            Console.WriteLine($"You {userResult}\n");
+            var computerResult = this.game.ComputerTurn();
+            Console.WriteLine($"Computer {computerResult}\n");
         } while (this.game.GameIsFinished() is false);
     }
 }

@@ -17,19 +17,23 @@ public static class Extensions
     {
         var chars = givenPoint.ToCharArray();
 
-        if (chars.Length != 2)
-        {
-            return null;
-        }
-
         var column = chars[0].CharToIntColumnParser();
+        int row = 0;
 
         if (column < 1 || column > 10)
         {
             return null;
         }
 
-        var row = (int)GetNumericValue(chars[1]);
+        if (chars.Length == 2)
+        {
+            row = (int)GetNumericValue(chars[1]);
+        }
+        else if (chars.Length == 3)
+        {
+            var rowString = $"{chars[1]}{chars[2]}";
+            Int32.TryParse(rowString, out row);
+        }
 
         if (row < 1 || row > 10)
         {

@@ -28,7 +28,7 @@ internal class Board
             foreach (var shipPosition in shipPositions)
             {
                 this.BoardPositions.First(boardPosition => boardPosition.X == shipPosition.X
-                                                           && boardPosition.Y == shipPosition.Y).OccupationType = ship.OccupationType;
+                                                           && boardPosition.Y == shipPosition.Y).OccupationType = ship.occupationType;
             }
         }
     }

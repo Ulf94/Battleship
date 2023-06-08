@@ -13,8 +13,8 @@ internal class PointsProvidersFactory : IPointsProvidersFactory
     public IPointsProvider GetInstance(string typeOfProvider)
         => typeOfProvider switch
         {
-            OwnerType.COMPUTER => this.GetService(typeof(ComputerPointsProvider)),
-            OwnerType.USER => this.GetService(typeof(UserPointsProvider)),
+            PlayerNames.COMPUTER => this.GetService(typeof(ComputerPointsProvider)),
+            PlayerNames.USER => this.GetService(typeof(UserPointsProvider)),
             _ => throw new InvalidOperationException(),
         };
 

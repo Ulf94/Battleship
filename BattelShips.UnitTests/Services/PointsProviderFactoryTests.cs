@@ -45,7 +45,7 @@ public sealed class PointsProviderFactoryTests
         };
 
         //WHEN
-        var providerImplementations = new PointsProvidersFactory(providers).GetInstance(OwnerType.COMPUTER);
+        var providerImplementations = new PointsProvidersFactory(providers).GetInstance(PlayerNames.COMPUTER);
 
         //THEN
         providerImplementations.Should()
@@ -63,7 +63,7 @@ public sealed class PointsProviderFactoryTests
         };
 
         //WHEN
-        var providerImplementations = new PointsProvidersFactory(providers).GetInstance(OwnerType.USER);
+        var providerImplementations = new PointsProvidersFactory(providers).GetInstance(PlayerNames.USER);
 
         //THEN
         providerImplementations.Should()
