@@ -28,10 +28,14 @@ internal sealed class UserService : IUserService
         var userBattleShip2Points = this.pointsProvidersFactory.GetInstance(userType).GetPoints(ShipSizes.BATTLESHIP);
         var userBattleShip2 = this.shipService.CreateShip(userBattleShip2Points, userType, ShipSizes.BATTLESHIP);
 
+        var userDestroyerPoints = this.pointsProvidersFactory.GetInstance(userType).GetPoints(ShipSizes.DESTROYER);
+        var userDestroyer = this.shipService.CreateShip(userDestroyerPoints, userType, ShipSizes.DESTROYER);
+
         var userShips = new List<Ship>
         {
             userBattleShip1,
             userBattleShip2,
+            userDestroyer,
         };
 
         var user = new User()
