@@ -56,6 +56,20 @@ public class ExtensionTests
     }
 
     [TestMethod]
+    public void OnGivenPoint_ShouldReturnString()
+    {
+        //GIVEN
+        var givenPoint = new Point(1, 1);
+        //WHEN
+        var result = givenPoint.PointToString();
+
+        //THEN
+        result.Should()
+            .Be("A1")
+            ;
+    }
+
+    [TestMethod]
     public void OnGivenSecondCharOutOfBound_ShouldReturnNull()
     {
         //GIVEN

@@ -7,18 +7,22 @@ using Battleships.Interfaces;
 using Battleships.Services;
 using FluentAssertions;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
+using Moq;
 
 [TestClass]
 public sealed class PointsProviderFactoryTests
 {
+    private readonly Mock<IConsoleIO> console = new();
+    private readonly Mock<ICustomRandom> random = new();
+
     [TestMethod]
     public void OnGivenInvalidString_ShouldThrowException()
     {
         //GIVEN
         var providers = new List<IPointsProvider>()
         {
-            new UserPointsProvider(new ConsoleIO()),
-            new ComputerPointsProvider(new CustomRandom()),
+            new UserPointsProvider(this.console.Object),
+            new ComputerPointsProvider(this.console.Object, this.random.Object),
         };
 
         //WHEN
@@ -36,8 +40,8 @@ public sealed class PointsProviderFactoryTests
         //GIVEN
         var providers = new List<IPointsProvider>()
         {
-            new UserPointsProvider(new ConsoleIO()),
-            new ComputerPointsProvider(new CustomRandom()),
+            new UserPointsProvider(this.console.Object),
+            new ComputerPointsProvider(this.console.Object, this.random.Object),
         };
 
         //WHEN
@@ -54,8 +58,8 @@ public sealed class PointsProviderFactoryTests
         //GIVEN
         var providers = new List<IPointsProvider>()
         {
-            new UserPointsProvider(new ConsoleIO()),
-            new ComputerPointsProvider(new CustomRandom()),
+            new UserPointsProvider(this.console.Object),
+            new ComputerPointsProvider(this.console.Object, this.random.Object),
         };
 
         //WHEN

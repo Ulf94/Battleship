@@ -13,6 +13,8 @@ public sealed class ComputerPointsProviderTests
 {
     private const int SHIP_SIZE = 5;
 
+    private readonly Mock<IConsoleIO> console = new();
+
     private readonly List<Point> expectedPointsFour = new()
     {
         new(5, 5),
@@ -58,7 +60,7 @@ public sealed class ComputerPointsProviderTests
         this.randomMock.Setup(service => service.GetRandomX(1, 10)).Returns(5);
         this.randomMock.Setup(service => service.GetRandomY(1, 10)).Returns(5);
         this.randomMock.Setup(service => service.GetRandomOrientation(1, 10)).Returns(2);
-        var provider = new ComputerPointsProvider(this.randomMock.Object);
+        var provider = new ComputerPointsProvider(this.console.Object, this.randomMock.Object);
 
         //WHEN
         var result = provider.GetPoints(SHIP_SIZE);
@@ -76,7 +78,7 @@ public sealed class ComputerPointsProviderTests
         this.randomMock.Setup(service => service.GetRandomX(1, 10)).Returns(3);
         this.randomMock.Setup(service => service.GetRandomY(1, 10)).Returns(3);
         this.randomMock.Setup(service => service.GetRandomOrientation(1, 10)).Returns(2);
-        var provider = new ComputerPointsProvider(this.randomMock.Object);
+        var provider = new ComputerPointsProvider(this.console.Object, this.randomMock.Object);
 
         //WHEN
         var result = provider.GetPoints(SHIP_SIZE);
@@ -94,7 +96,7 @@ public sealed class ComputerPointsProviderTests
         this.randomMock.Setup(service => service.GetRandomX(1, 10)).Returns(3);
         this.randomMock.Setup(service => service.GetRandomY(1, 10)).Returns(3);
         this.randomMock.Setup(service => service.GetRandomOrientation(1, 10)).Returns(3);
-        var provider = new ComputerPointsProvider(this.randomMock.Object);
+        var provider = new ComputerPointsProvider(this.console.Object, this.randomMock.Object);
 
         //WHEN
         var result = provider.GetPoints(SHIP_SIZE);
@@ -112,7 +114,7 @@ public sealed class ComputerPointsProviderTests
         this.randomMock.Setup(service => service.GetRandomX(1, 10)).Returns(5);
         this.randomMock.Setup(service => service.GetRandomY(1, 10)).Returns(5);
         this.randomMock.Setup(service => service.GetRandomOrientation(1, 10)).Returns(3);
-        var provider = new ComputerPointsProvider(this.randomMock.Object);
+        var provider = new ComputerPointsProvider(this.console.Object, this.randomMock.Object);
 
         //WHEN
         var result = provider.GetPoints(SHIP_SIZE);

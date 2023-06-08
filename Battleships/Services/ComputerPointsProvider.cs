@@ -1,14 +1,17 @@
 ﻿namespace Battleships.Services;
 
+using Battleships.Constants;
+using Battleships.Helpers;
 using Battleships.Interfaces;
 using Battleships.Models;
 
 internal class ComputerPointsProvider : IPointsProvider
 {
+    private readonly IConsoleIO console;
     private readonly ICustomRandom random;
 
-    public ComputerPointsProvider(ICustomRandom random)
-        => this.random = random;
+    public ComputerPointsProvider(IConsoleIO console, ICustomRandom random)
+        => (this.console, this.random) = (console, random);
 
     public List<Point> GetPoints(int shipSize)
     {
@@ -54,5 +57,13 @@ internal class ComputerPointsProvider : IPointsProvider
         }
 
         return points;
+    }
+
+    public Point Shoot()
+    {
+        var computerShootAt = new Point(this.random.GetRandomX(1, BoardSize.COLUMNS), this.random.GetRandomY(1, BoardSize.ROWS));
+        this.console.WriteLine($"Computer is shooting at: {computerShootAt.PointToString()}");
+
+        return computerShootAt;
     }
 }

@@ -5,6 +5,14 @@ using static System.Char;
 
 public static class Extensions
 {
+    public static string PointToString(this Point givenPoint)
+    {
+        var column = givenPoint.X.IntToStringColumnParser();
+        var row = givenPoint.Y.ToString();
+
+        return $"{column}{row}";
+    }
+
     public static Point? StringToPoint(this string givenPoint)
     {
         var chars = givenPoint.ToCharArray();
@@ -14,7 +22,7 @@ public static class Extensions
             return null;
         }
 
-        var column = chars[0].ColumnParser();
+        var column = chars[0].CharToIntColumnParser();
 
         if (column < 1 || column > 10)
         {
@@ -37,7 +45,7 @@ public static class Extensions
         return point;
     }
 
-    private static int ColumnParser(this char columnSign) =>
+    private static int CharToIntColumnParser(this char columnSign) =>
         columnSign switch
         {
             'A' => 1,
@@ -51,5 +59,21 @@ public static class Extensions
             'I' => 9,
             'J' => 10,
             _ => -1,
+        };
+
+    private static string IntToStringColumnParser(this int columnValue) =>
+        columnValue switch
+        {
+            1 => "A",
+            2 => "B",
+            3 => "C",
+            4 => "D",
+            5 => "E",
+            6 => "F",
+            7 => "G",
+            8 => "H",
+            9 => "I",
+            10 => "J",
+            _ => "_",
         };
 }

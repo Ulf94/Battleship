@@ -2,8 +2,8 @@
 
 using Battleships.Models;
 
-public interface IPointsProvider
+public interface IUserService
 {
-    public List<Point> GetPoints(int shipSize);
+    public User CreateUser(string userType);
     public Point Shoot();
 }

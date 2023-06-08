@@ -1,5 +1,6 @@
 ﻿namespace Battleships.Services;
 
+using Battleships.Constants;
 using Battleships.Helpers;
 using Battleships.Interfaces;
 using Battleships.Models;
@@ -15,6 +16,19 @@ internal class UserPointsProvider : IPointsProvider
     {
         var i = 0;
         var listOfUserPoints = new List<Point>();
+
+        switch (shipSize)
+        {
+            case ShipSizes.DESTROYER:
+                this.console.WriteLine("Place your destroyer");
+
+                break;
+
+            case ShipSizes.BATTLESHIP:
+                this.console.WriteLine("Place your battleship");
+
+                break;
+        }
 
         while (i < shipSize)
         {
@@ -43,5 +57,13 @@ internal class UserPointsProvider : IPointsProvider
         }
 
         return listOfUserPoints;
+    }
+
+    public Point Shoot()
+    {
+        this.console.Write("Fire: ");
+        var point = this.console.ReadLine().StringToPoint();
+
+        return point;
     }
 }
