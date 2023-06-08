@@ -12,9 +12,6 @@ public class Ship
     private readonly string owner;
     public readonly List<Point> Points;
 
-    private bool horizontalOrientation = false;
-    private bool verticalOrientation = false;
-
     public int Hits { get; set; } = 0;
 
     public OccupationType occupationType { get; init; }

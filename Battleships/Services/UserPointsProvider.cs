@@ -34,7 +34,7 @@ internal class UserPointsProvider : IPointsProvider
                 break;
         }
 
-        bool pointsAreValid = false;
+        bool pointsAreValid;
 
         do
         {
@@ -50,7 +50,7 @@ internal class UserPointsProvider : IPointsProvider
 
                     if (availablePoint is false)
                     {
-                        points.Add(point!);
+                        points.Add(point);
                         i++;
                     }
                     else
@@ -83,8 +83,13 @@ internal class UserPointsProvider : IPointsProvider
 
     public Point Shoot()
     {
-        this.console.Write("Fire: ");
-        var point = this.console.ReadLine().StringToPoint();
+        var point = new Point();
+
+        do
+        {
+            this.console.Write("Fire: ");
+            point = this.console.ReadLine().StringToPoint();
+        } while (point is null);
 
         return point;
     }
