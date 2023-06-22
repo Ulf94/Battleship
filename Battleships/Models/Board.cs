@@ -4,16 +4,16 @@ using Battleships.Constants;
 
 internal class Board
 {
-    public List<Point> BoardPositions { get; set; }
-    private List<Ship> UserShips { get; init; } = new();
+    private List<Point> BoardPositions { get; }
+    private List<Ship> UserShips { get; } = new();
 
     public Board(List<Ship> ships)
     {
         this.BoardPositions = new List<Point>();
 
-        for (int i = 1; i <= BoardSize.COLUMNS; i++)
+        for (var i = 1; i <= BoardSize.COLUMNS; i++)
         {
-            for (int j = 1; j <= BoardSize.ROWS; j++)
+            for (var j = 1; j <= BoardSize.ROWS; j++)
             {
                 this.BoardPositions.Add(new Point(i, j));
             }
@@ -28,7 +28,7 @@ internal class Board
             foreach (var shipPosition in shipPositions)
             {
                 this.BoardPositions.First(boardPosition => boardPosition.X == shipPosition.X
-                                                           && boardPosition.Y == shipPosition.Y).OccupationType = ship.occupationType;
+                                                           && boardPosition.Y == shipPosition.Y).OccupationType = ship.OccupationType;
             }
         }
     }
@@ -62,10 +62,5 @@ internal class Board
     public OccupationType GeOccupationTypeOfPosition(int x, int y)
     {
         return this.BoardPositions.Single(position => position.X == x && position.Y == y).OccupationType;
-    }
-
-    public void UpdateOccupationTypeOfPosition(Point firePoint, OccupationType occupationType)
-    {
-        this.BoardPositions.Single(position => position.Equals(firePoint)).OccupationType = occupationType;
     }
 }

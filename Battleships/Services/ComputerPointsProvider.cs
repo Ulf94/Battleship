@@ -8,7 +8,6 @@ using Battleships.Models;
 
 internal class ComputerPointsProvider : IPointsProvider
 {
-    private readonly List<Point> allComputerPoints = new();
     private readonly IConsoleIO console;
     private readonly ICustomRandom random;
     private bool horizontalOrientation = default;
@@ -17,7 +16,7 @@ internal class ComputerPointsProvider : IPointsProvider
     public ComputerPointsProvider(IConsoleIO console, ICustomRandom random)
         => (this.console, this.random) = (console, random);
 
-    public List<Point> GetPoints(int shipSize)
+    public List<Point> GetPoints(int shipSize, List<Point> allComputerPoints)
     {
         var points = new List<Point>();
 
@@ -31,14 +30,14 @@ internal class ComputerPointsProvider : IPointsProvider
             {
                 if (startY - shipSize >= 0)
                 {
-                    for (int i = 0; i < shipSize; i++)
+                    for (var i = 0; i < shipSize; i++)
                     {
                         points.Add(new Point(startX, startY - i));
                     }
                 }
                 else
                 {
-                    for (int i = 0; i < shipSize; i++)
+                    for (var i = 0; i < shipSize; i++)
                     {
                         points.Add(new Point(startX, startY + i));
                     }
@@ -48,40 +47,42 @@ internal class ComputerPointsProvider : IPointsProvider
             {
                 if (startX - shipSize >= 0)
                 {
-                    for (int i = 0; i < shipSize; i++)
+                    for (var i = 0; i < shipSize; i++)
                     {
                         points.Add(new Point(startX - i, startY));
                     }
                 }
                 else
                 {
-                    for (int i = 0; i < shipSize; i++)
+                    for (var i = 0; i < shipSize; i++)
                     {
                         points.Add(new Point(startX + i, startY));
                     }
                 }
             }
-        } while (this.ValidPoints(points, shipSize) is false);
+        } while (this.ValidPoints(points, shipSize, allComputerPoints) is false);
 
-        this.allComputerPoints.AddRange(points);
+        allComputerPoints.AddRange(points);
 
         return points;
     }
 
     public Point Shoot()
     {
-        var computerShootAt = new Point(this.random.GetRandomX(1, BoardSize.COLUMNS), this.random.GetRandomY(1, BoardSize.ROWS));
+        var targetX = this.random.GetRandomX(1, BoardSize.COLUMNS);
+        var targetY = this.random.GetRandomY(1, BoardSize.ROWS);
+        var computerShootAt = new Point(targetX, targetY);
         this.console.WriteLine($"Computer is shooting at: {computerShootAt.PointToString()}");
 
         return computerShootAt;
     }
 
-    private bool ValidPoints(List<Point> providedPoints, int shipSize)
+    private bool ValidPoints(List<Point> providedPoints, int shipSize, ICollection<Point> allComputerPoints)
     {
         //Check if any provided point is already taken
         foreach (var point in providedPoints)
         {
-            if (this.allComputerPoints.Contains(point))
+            if (allComputerPoints.Contains(point))
             {
                 providedPoints.Clear();
 

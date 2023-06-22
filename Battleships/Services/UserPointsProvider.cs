@@ -8,7 +8,6 @@ using Battleships.Models;
 
 internal class UserPointsProvider : IPointsProvider
 {
-    private readonly List<Point> allUserPoints = new();
     private readonly IConsoleIO console;
     private bool horizontalOrientation = default;
     private bool verticalOrientation = default;
@@ -16,7 +15,7 @@ internal class UserPointsProvider : IPointsProvider
     public UserPointsProvider(IConsoleIO console)
         => this.console = console;
 
-    public List<Point> GetPoints(int shipSize)
+    public List<Point> GetPoints(int shipSize, List<Point> allUserPoints)
     {
         var i = 0;
         var points = new List<Point>();
@@ -64,7 +63,7 @@ internal class UserPointsProvider : IPointsProvider
                 }
             }
 
-            if (this.ValidPoints(points, shipSize) is false)
+            if (this.ValidPoints(points, shipSize, allUserPoints) is false)
             {
                 i = 0;
                 points.Clear();
@@ -76,7 +75,7 @@ internal class UserPointsProvider : IPointsProvider
             }
         } while (pointsAreValid is false);
 
-        this.allUserPoints.AddRange(points);
+        allUserPoints.AddRange(points);
 
         return points;
     }
@@ -94,14 +93,14 @@ internal class UserPointsProvider : IPointsProvider
         return point;
     }
 
-    private bool ValidPoints(List<Point> providedPoints, int shipSize)
+    private bool ValidPoints(List<Point> providedPoints, int shipSize, List<Point> allUserPoints)
     {
         //Check if any provided point is already taken
         foreach (var point in providedPoints)
         {
-            if (this.allUserPoints.Contains(point))
+            if (allUserPoints.Contains(point))
             {
-                Console.WriteLine("At least one provided point is already taken.");
+                Console.WriteLine("At least one provided point is already taken. Provide all five points again");
 
                 providedPoints.Clear();
 

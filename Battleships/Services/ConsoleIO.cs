@@ -6,7 +6,7 @@ internal class ConsoleIO : IConsoleIO
 {
     public string ReadLine()
     {
-        bool correctInput = false;
+        var correctInput = false;
         string? input;
 
         do

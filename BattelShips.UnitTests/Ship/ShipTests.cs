@@ -37,7 +37,7 @@ public sealed class ShipTests
     public void ShouldCreateBattleship()
     {
         //GIVEN
-        this.pointsProvidersFactoryMock.Setup(provider => provider.GetInstance(PlayerNames.USER).GetPoints(ShipSizes.BATTLESHIP))
+        this.pointsProvidersFactoryMock.Setup(provider => provider.GetInstance(PlayerNames.USER).GetPoints(ShipSizes.BATTLESHIP, new List<Point>()))
             .Returns(this.providedPointBattleship);
 
         //WHEN
@@ -67,7 +67,7 @@ public sealed class ShipTests
             new(1, 4),
         };
 
-        this.pointsProvidersFactoryMock.Setup(provider => provider.GetInstance(PlayerNames.COMPUTER).GetPoints(ShipSizes.DESTROYER))
+        this.pointsProvidersFactoryMock.Setup(provider => provider.GetInstance(PlayerNames.COMPUTER).GetPoints(ShipSizes.DESTROYER, new List<Point>()))
             .Returns(destroyerPoints);
 
         //WHEN
@@ -84,7 +84,7 @@ public sealed class ShipTests
             .HaveCount(ShipSizes.DESTROYER)
             ;
 
-        destroyer.occupationType.Should()
+        destroyer.OccupationType.Should()
             .Be(OccupationType.D)
             ;
     }
@@ -93,7 +93,7 @@ public sealed class ShipTests
     public void WhenHitsAreGreaterOrEqualThanSize_IsSunkShouldBeTrue()
     {
         //GIVEN
-        this.pointsProvidersFactoryMock.Setup(provider => provider.GetInstance(PlayerNames.USER).GetPoints(ShipSizes.BATTLESHIP))
+        this.pointsProvidersFactoryMock.Setup(provider => provider.GetInstance(PlayerNames.USER).GetPoints(ShipSizes.BATTLESHIP, new List<Point>()))
             .Returns(this.providedPointBattleship);
 
         //WHEN
@@ -107,7 +107,7 @@ public sealed class ShipTests
             .NotBeNull()
             ;
 
-        battleship.isSunk.Should()
+        battleship.IsSunk.Should()
             .BeTrue()
             ;
     }

@@ -4,6 +4,6 @@ using Battleships.Models;
 
 public interface IPointsProvider
 {
-    public List<Point> GetPoints(int shipSize);
+    public List<Point> GetPoints(int shipSize, List<Point> userAllPoints);
     public Point Shoot();
 }

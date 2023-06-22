@@ -54,6 +54,23 @@ public sealed class ComputerPointsProviderTests
     private readonly Mock<ICustomRandom> randomMock = new();
 
     [TestMethod]
+    public void OnGivenPoints_ReturnShootPoint()
+    {
+        //GIVEN
+        this.randomMock.Setup(service => service.GetRandomX(1, 10)).Returns(5);
+        this.randomMock.Setup(service => service.GetRandomY(1, 10)).Returns(5);
+        var provider = new ComputerPointsProvider(this.console.Object, this.randomMock.Object);
+
+        //WHEN
+        var result = provider.Shoot();
+
+        //THEN
+        result.Should()
+            .BeEquivalentTo(new Point(5, 5))
+            ;
+    }
+
+    [TestMethod]
     public void OnGivenPointsFour_ShouldReturnListOfCorrectPoints()
     {
         //GIVEN
@@ -63,7 +80,7 @@ public sealed class ComputerPointsProviderTests
         var provider = new ComputerPointsProvider(this.console.Object, this.randomMock.Object);
 
         //WHEN
-        var result = provider.GetPoints(SHIP_SIZE);
+        var result = provider.GetPoints(SHIP_SIZE, new List<Point>());
 
         //THEN
         result.Should()
@@ -81,7 +98,7 @@ public sealed class ComputerPointsProviderTests
         var provider = new ComputerPointsProvider(this.console.Object, this.randomMock.Object);
 
         //WHEN
-        var result = provider.GetPoints(SHIP_SIZE);
+        var result = provider.GetPoints(SHIP_SIZE, new List<Point>());
 
         //THEN
         result.Should()
@@ -99,7 +116,7 @@ public sealed class ComputerPointsProviderTests
         var provider = new ComputerPointsProvider(this.console.Object, this.randomMock.Object);
 
         //WHEN
-        var result = provider.GetPoints(SHIP_SIZE);
+        var result = provider.GetPoints(SHIP_SIZE, new List<Point>());
 
         //THEN
         result.Should()
@@ -117,7 +134,7 @@ public sealed class ComputerPointsProviderTests
         var provider = new ComputerPointsProvider(this.console.Object, this.randomMock.Object);
 
         //WHEN
-        var result = provider.GetPoints(SHIP_SIZE);
+        var result = provider.GetPoints(SHIP_SIZE, new List<Point>());
 
         //THEN
         result.Should()

@@ -58,7 +58,7 @@ internal sealed class Game : IGame
 
     private void AllShipsSunk(User player)
     {
-        var shipsStatuses = player.Ships.Select(ship => ship.isSunk);
+        var shipsStatuses = player.Ships.Select(ship => ship.IsSunk);
 
         if (shipsStatuses.All(status => status))
             this.gameIsFinished = true;

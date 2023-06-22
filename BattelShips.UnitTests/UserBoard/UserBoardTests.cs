@@ -28,7 +28,7 @@ public sealed class UserBoardTests
             new(1, 5),
         };
 
-        this.pointsProviderFactory.Setup(provider => provider.GetInstance(PlayerNames.USER).GetPoints(ShipSizes.BATTLESHIP)).Returns(shipPoints);
+        this.pointsProviderFactory.Setup(provider => provider.GetInstance(PlayerNames.USER).GetPoints(ShipSizes.BATTLESHIP, new List<Point>())).Returns(shipPoints);
 
         var ships = new List<Ship>
         {
@@ -62,7 +62,7 @@ public sealed class UserBoardTests
             new(1, 5),
         };
 
-        this.pointsProviderFactory.Setup(provider => provider.GetInstance(PlayerNames.USER).GetPoints(ShipSizes.BATTLESHIP)).Returns(shipPoints);
+        this.pointsProviderFactory.Setup(provider => provider.GetInstance(PlayerNames.USER).GetPoints(ShipSizes.BATTLESHIP, new List<Point>())).Returns(shipPoints);
 
         var ships = new List<Ship>
         {

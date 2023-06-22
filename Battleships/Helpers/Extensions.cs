@@ -2,6 +2,7 @@
 
 using Battleships.Models;
 using static System.Char;
+using static System.Int32;
 
 public static class Extensions
 {
@@ -18,24 +19,36 @@ public static class Extensions
         var chars = givenPoint.ToCharArray();
 
         var column = chars[0].CharToIntColumnParser();
-        int row = 0;
+        var row = 0;
 
-        if (column < 1 || column > 10)
+        if (column is < 1 or > 10)
         {
             return null;
         }
 
-        if (chars.Length == 2)
+        switch (chars.Length)
         {
-            row = (int)GetNumericValue(chars[1]);
-        }
-        else if (chars.Length == 3)
-        {
-            var rowString = $"{chars[1]}{chars[2]}";
-            Int32.TryParse(rowString, out row);
+            case 2:
+            {
+                row = (int)GetNumericValue(chars[1]);
+
+                break;
+            }
+
+            case 3:
+            {
+                var rowString = $"{chars[1]}{chars[2]}";
+                TryParse(rowString, out row);
+
+                break;
+            }
+            default:
+            {
+                return null;
+            }
         }
 
-        if (row < 1 || row > 10)
+        if (row is < 1 or > 10)
         {
             return null;
         }
