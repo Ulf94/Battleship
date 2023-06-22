@@ -17,7 +17,6 @@ internal class UserPointsProvider : IPointsProvider
 
     public List<Point> GetPoints(int shipSize, List<Point> allUserPoints)
     {
-        var i = 0;
         var points = new List<Point>();
 
         switch (shipSize)
@@ -34,6 +33,7 @@ internal class UserPointsProvider : IPointsProvider
         }
 
         bool pointsAreValid;
+        var i = 0;
 
         do
         {
@@ -93,9 +93,9 @@ internal class UserPointsProvider : IPointsProvider
         return point;
     }
 
-    private bool ValidPoints(List<Point> providedPoints, int shipSize, List<Point> allUserPoints)
+    private bool ValidPoints(List<Point> providedPoints, int shipSize, ICollection<Point> allUserPoints)
     {
-        //Check if any provided point is already taken
+        //Check if any provided point is already taken by another ship
         foreach (var point in providedPoints)
         {
             if (allUserPoints.Contains(point))

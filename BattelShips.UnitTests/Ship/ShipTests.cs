@@ -1,7 +1,9 @@
 ﻿namespace BattleShips.UnitTests.Ship;
 
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Battleships.Constants;
+using Battleships.Exceptions;
 using Battleships.Interfaces;
 using Battleships.Models;
 using FluentAssertions;
@@ -32,6 +34,21 @@ public sealed class ShipTests
         new(3, 1),
         new(4, 1),
     };
+
+    [TestMethod]
+    public async Task OnGivenInvalidShipSize_ThrowsInvalidOccupationTypeException()
+    {
+        //GIVEN
+        var invalidShipSize = 6;
+
+        //WHEN
+        var action = () => new Ship(new List<Point>(), It.IsAny<string>(), invalidShipSize);
+
+        //THEN
+        action.Should()
+            .Throw<InvalidOccupationTypeException>()
+            ;
+    }
 
     [TestMethod]
     public void ShouldCreateBattleship()

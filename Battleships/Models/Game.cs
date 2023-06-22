@@ -6,21 +6,17 @@ using Battleships.Interfaces;
 
 internal sealed class Game : IGame
 {
-    private string computerName { get; } = PlayerNames.COMPUTER;
-    private string userName { get; } = PlayerNames.USER;
     private readonly IConsoleIO console;
-    private readonly IPointsProvidersFactory pointsProvidersFactory;
     private readonly IUserService userService;
     private User computer { get; set; }
     private Board computerBoard { get; set; }
-    public bool gameIsFinished { get; set; } = default;
+    private bool gameIsFinished { get; set; } = default;
     private User user1 { get; set; }
     private Board userBoard { get; set; }
 
-    public Game(IConsoleIO console, IUserService userService, IPointsProvidersFactory pointsProvidersFactory)
+    public Game(IConsoleIO console, IUserService userService)
     {
         this.console = console;
-        this.pointsProvidersFactory = pointsProvidersFactory;
         this.userService = userService;
 
         this.user1 = userService.CreateUser(PlayerNames.USER);
