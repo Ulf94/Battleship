@@ -12,7 +12,7 @@ using Moq;
 [TestClass]
 public sealed class ShipServiceTests
 {
-    private readonly List<Point> pointsOne = new()
+    private static readonly List<Point> pointsOne = new()
     {
         new(1, 1),
         new(1, 2),
@@ -21,9 +21,7 @@ public sealed class ShipServiceTests
         new(1, 5),
     };
 
-    private readonly Mock<IPointsProvidersFactory> pointsProvidersFactory = new();
-
-    private readonly List<Point> pointsThree = new()
+    private static readonly List<Point> pointsThree = new()
     {
         new(3, 1),
         new(3, 2),
@@ -31,7 +29,7 @@ public sealed class ShipServiceTests
         new(3, 4),
     };
 
-    private readonly List<Point> pointsTwo = new()
+    private static readonly List<Point> pointsTwo = new()
     {
         new(2, 1),
         new(2, 2),
@@ -40,15 +38,24 @@ public sealed class ShipServiceTests
         new(2, 5),
     };
 
+    private readonly List<Ship> expectedShips = new()
+    {
+        new(pointsOne, PlayerNames.USER, ShipSizes.BATTLESHIP),
+        new(pointsTwo, PlayerNames.USER, ShipSizes.BATTLESHIP),
+        new(pointsThree, PlayerNames.USER, ShipSizes.DESTROYER),
+    };
+
+    private readonly Mock<IPointsProvidersFactory> pointsProvidersFactory = new();
+
     [TestMethod]
     public void ShouldReturnListOfShips()
     {
         //GIVEN
         this.pointsProvidersFactory.SetupSequence(service =>
                 service.GetInstance(PlayerNames.USER).GetPoints(It.IsAny<int>(), new List<Point>()))
-            .Returns(this.pointsOne)
-            .Returns(this.pointsTwo)
-            .Returns(this.pointsThree);
+            .Returns(pointsOne)
+            .Returns(pointsTwo)
+            .Returns(pointsThree);
 
         var shipService = new ShipService(this.pointsProvidersFactory.Object);
 
@@ -58,6 +65,8 @@ public sealed class ShipServiceTests
         //THEN
         ships.Should()
             .NotBeNull()
+            .And
+            .BeEquivalentTo(this.expectedShips)
             ;
     }
 }
